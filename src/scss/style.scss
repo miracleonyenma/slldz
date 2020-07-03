@@ -25,9 +25,17 @@ main.site-demo-main{
 
     ul{
         list-style-type: none;
+        position: relative;
 
-        li{
+        li.slide-item{
             display: block;
+            visibility: hidden;
+            position: absolute;
+
+            &.active{
+                visibility: visible;
+                position: relative;
+            }
         }
     }
 

@@ -32,10 +32,18 @@ main.site-demo-main {
 
 #slides-cont ul {
   list-style-type: none;
+  position: relative;
 }
 
-#slides-cont ul li {
+#slides-cont ul li.slide-item {
   display: block;
+  visibility: hidden;
+  position: absolute;
+}
+
+#slides-cont ul li.slide-item.active {
+  visibility: visible;
+  position: relative;
 }
 
 #slides-cont article {
