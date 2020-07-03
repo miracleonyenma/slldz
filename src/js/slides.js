@@ -44,6 +44,10 @@ const getSlides = contEl => {
     let slidesCont = document.querySelector(contEl);
     let slidesItems = slidesCont.querySelectorAll("li.slide-item");
 
+    for (let index = 0; index < slidesItems.length; index++) {
+        slidesItems[index].setAttribute("id", "slide" + index);
+    }
+
     return{
         slidesCont,
         slidesItems
@@ -53,17 +57,39 @@ const getSlides = contEl => {
 // function to populate indicators
 const populateIndicators = (contEl, targetEl) => {
     let indicatorsCont = document.querySelector(contEl);
-    let indicatorItems = indicatorsCont.querySelectorAll("li");
+    let oldIndicatorItem = indicatorsCont.querySelector("li");
 
-    // perform deep copy of indicatorItem, set to true to copy descendants
-    let indicatorItemClone = indicatorItems[0].cloneNode(true);
+    for( let i = 0; i < targetEl.length; i++){
 
-    while(indicatorsCont.firstElementChild){
-        indicatorsCont.removeChild(indicatorsCont.firstElementChild);
-    }
+        // perform deep copy of indicatorItem, set to true to copy descendants
+        let indicatorItemClone = oldIndicatorItem.cloneNode(true);
 
-    targetEl.forEach( x => {
-        console.log(x)
+        // remove the first and initial html Item
+        oldIndicatorItem.remove();
+
+        // append the indicator to indicate the first target element
+        // this one can be manipulated
         indicatorsCont.appendChild(indicatorItemClone);
-    });
+
+        // get the current indicator(for each iteration of the loop)
+        let newIndicator = indicatorsCont.querySelectorAll("li")[i];
+
+        // set the current indicator attribute to point to its target element
+        newIndicator.setAttribute("data-target", targetEl[i].getAttribute("id"));
+
+        console.log(newIndicator);
+        
+        newIndicator.addEventListener("click", e => {
+            console.log(e.target.getAttribute("data-target"))
+        })
+    };
+
+    let indicatorItems = indicatorsCont.querySelectorAll("li");
+    console.log(indicatorItems);
+
+    return{
+        indicatorsCont,
+        indicatorItems
+    }
+    
 }
