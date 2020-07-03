@@ -7,9 +7,22 @@ document.addEventListener("readystatechange", e => {
         docStyles.setProperty("--circle-length", getDefaultCircle(".indicator-circle-1").circleLength);
     
         // get total slides
-        let slides = getSlides("#slides-cont").slidesItems;
+        let slides = getSlides("#slides-cont .slides-list").slidesItems;
 
-        populateIndicators("ul.slides-indicators-list", slides);
+        // create indicators for each slide item
+        // return the newly created indicators to indicators variable
+        let indicators = populateIndicators("ul.slides-indicators-list", slides).indicatorItems;
+
+        // add click event listeners to each indicator
+        // to change the active slide to its respective target when clicked
+        // #1 this can be done in populateIndicators function directly
+        // #1 check
+        // indicators.forEach(x => {
+        //     x.addEventListener("click", e => {
+        //         changeActive(document.querySelector(`#${e.target.getAttribute("data-target")}`), "active", getSlides("#slides-cont .slides-list").slidesCont);
+        //     })    
+        // })
+
     }
 });
 
@@ -76,20 +89,31 @@ const populateIndicators = (contEl, targetEl) => {
 
         // set the current indicator attribute to point to its target element
         newIndicator.setAttribute("data-target", targetEl[i].getAttribute("id"));
-
-        console.log(newIndicator);
         
+        // #1 another way to implement changeActive
+        // add click event listeners to each indicator
+        // to change the active slide to its respective target when clicked
         newIndicator.addEventListener("click", e => {
-            console.log(e.target.getAttribute("data-target"))
+            changeActive(targetEl[i], "active", getSlides("#slides-cont .slides-list").slidesCont);
         })
     };
 
     let indicatorItems = indicatorsCont.querySelectorAll("li");
-    console.log(indicatorItems);
 
     return{
         indicatorsCont,
         indicatorItems
     }
     
+}
+
+// function to change active slider
+const changeActive = (target, activeClass, targetParent) => {
+    let parentChildren = targetParent.children;
+
+    for(let i = 0; i < parentChildren.length; i++){
+        parentChildren[i].classList.remove(activeClass);
+    };
+
+    target.classList.add(activeClass);
 }
