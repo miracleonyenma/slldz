@@ -24,7 +24,7 @@ main.site-demo-main{
     max-width: 680px; 
 
     *{
-        transition: 0.72s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: all 0.72s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     ul{
@@ -132,12 +132,22 @@ main.site-demo-main{
             cursor: pointer;
 
             &:hover, &:focus{
-                transform: scale(1.09);
+                transform: scale(1.2);
             }
-
+            
             &:active{
                 cursor: wait;
                 transform: scale(0.91);
+            }
+            
+            &.indicator-active{
+                transform: scale(1.2);
+
+                svg{
+                    .indicator-circle-2{
+                        animation: strokeAnim 3s linear;
+                    }
+                }
             }
 
             svg{
@@ -156,10 +166,19 @@ main.site-demo-main{
                     }
                     &.indicator-circle-2{
                         stroke-dasharray: var(--circleLength);
-                        stroke-dashoffset: 100px;
+                        stroke-dashoffset: var(--circleLength);
                     }
                 }
             }
         }
+    }
+}
+
+@keyframes strokeAnim{
+    0%{
+        stroke-dashoffset: var(--circleLength);
+    }
+    100%{
+        stroke-dashoffset: 0px;
     }
 }

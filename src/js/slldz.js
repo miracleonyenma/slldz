@@ -95,9 +95,20 @@ const populateIndicators = (contEl, targetEl) => {
         // to change the active slide to its respective target when clicked
         newIndicator.addEventListener("click", e => {
             changeActive(targetEl[i], "active", getSlides("#slldz-cont .slldz-list").slidesCont);
-        })
+
+            // change active class of indicator as well
+            changeActive(newIndicator, "indicator-active", indicatorsCont);
+        });
+
+        // add the class of ".indicator-active" to indicator with
+        // target element having the class of ".active"
+        let targetClassList = targetEl[i].className.split(" ");
+        if(targetClassList.includes("active")){
+            newIndicator.classList.add("indicator-active");
+        }
     };
 
+    // get all newly created indicatorItems
     let indicatorItems = indicatorsCont.querySelectorAll("li");
 
     return{
