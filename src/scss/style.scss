@@ -18,7 +18,7 @@ main.site-demo-main{
     justify-content: center;
 }
 
-#slides-cont{
+#slldz-cont{
     width: 100%;
     position: relative;
     max-width: 680px; 
@@ -31,7 +31,7 @@ main.site-demo-main{
         list-style-type: none;
         position: relative;
 
-        &.slides-list{
+        &.slldz-list{
             min-height: 400px;
         }
 
@@ -123,7 +123,7 @@ main.site-demo-main{
         }
     }
 
-    ul.slides-indicators-list{
+    ul.slldz-indicators-list{
         position: absolute;
         top: 0;
         right: 0;

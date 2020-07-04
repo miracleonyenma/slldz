@@ -7,11 +7,11 @@ document.addEventListener("readystatechange", e => {
         docStyles.setProperty("--circle-length", getDefaultCircle(".indicator-circle-1").circleLength);
     
         // get total slides
-        let slides = getSlides("#slides-cont .slides-list").slidesItems;
+        let slides = getSlides("#slldz-cont .slldz-list").slidesItems;
 
         // create indicators for each slide item
         // return the newly created indicators to indicators variable
-        let indicators = populateIndicators("ul.slides-indicators-list", slides).indicatorItems;
+        let indicators = populateIndicators("ul.slldz-indicators-list", slides).indicatorItems;
 
         // add click event listeners to each indicator
         // to change the active slide to its respective target when clicked
@@ -19,7 +19,7 @@ document.addEventListener("readystatechange", e => {
         // #1 check
         // indicators.forEach(x => {
         //     x.addEventListener("click", e => {
-        //         changeActive(document.querySelector(`#${e.target.getAttribute("data-target")}`), "active", getSlides("#slides-cont .slides-list").slidesCont);
+        //         changeActive(document.querySelector(`#${e.target.getAttribute("data-target")}`), "active", getSlides("#slldz-cont .slldz-list").slldzCont);
         //     })    
         // })
 
@@ -71,7 +71,7 @@ const getSlides = contEl => {
 const populateIndicators = (contEl, targetEl) => {
     let indicatorsCont = document.querySelector(contEl);
     let oldIndicatorItem = indicatorsCont.querySelector("li");
-
+    
     for( let i = 0; i < targetEl.length; i++){
 
         // perform deep copy of indicatorItem, set to true to copy descendants
@@ -94,7 +94,7 @@ const populateIndicators = (contEl, targetEl) => {
         // add click event listeners to each indicator
         // to change the active slide to its respective target when clicked
         newIndicator.addEventListener("click", e => {
-            changeActive(targetEl[i], "active", getSlides("#slides-cont .slides-list").slidesCont);
+            changeActive(targetEl[i], "active", getSlides("#slldz-cont .slldz-list").slidesCont);
         })
     };
 
