@@ -8,6 +8,7 @@
 :root{
     //default circle length
     --circleLength: 124.852px;
+    --default-dur: 3s;
 }
 
 main.site-demo-main{
@@ -145,7 +146,9 @@ main.site-demo-main{
 
                 svg{
                     .indicator-circle-2{
-                        animation: strokeAnim 3s linear;
+                        stroke-dashoffset: 0px;
+                        transition-duration: var(--default-dur);
+                        transition-timing-function: linear;
                     }
                 }
             }
@@ -171,14 +174,5 @@ main.site-demo-main{
                 }
             }
         }
-    }
-}
-
-@keyframes strokeAnim{
-    0%{
-        stroke-dashoffset: var(--circleLength);
-    }
-    100%{
-        stroke-dashoffset: 0px;
     }
 }

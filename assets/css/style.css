@@ -8,6 +8,7 @@
 
 :root {
   --circleLength: 124.852px;
+  --default-dur: 3s;
 }
 
 main.site-demo-main {
@@ -151,8 +152,11 @@ main.site-demo-main {
 }
 
 #slldz-cont ul.slldz-indicators-list li.indicator-active svg .indicator-circle-2 {
-  -webkit-animation: strokeAnim 3s linear;
-          animation: strokeAnim 3s linear;
+  stroke-dashoffset: 0px;
+  -webkit-transition-duration: var(--default-dur);
+          transition-duration: var(--default-dur);
+  -webkit-transition-timing-function: linear;
+          transition-timing-function: linear;
 }
 
 #slldz-cont ul.slldz-indicators-list li svg {
@@ -175,23 +179,5 @@ main.site-demo-main {
 #slldz-cont ul.slldz-indicators-list li svg circle.indicator-circle-2 {
   stroke-dasharray: var(--circleLength);
   stroke-dashoffset: var(--circleLength);
-}
-
-@-webkit-keyframes strokeAnim {
-  0% {
-    stroke-dashoffset: var(--circleLength);
-  }
-  100% {
-    stroke-dashoffset: 0px;
-  }
-}
-
-@keyframes strokeAnim {
-  0% {
-    stroke-dashoffset: var(--circleLength);
-  }
-  100% {
-    stroke-dashoffset: 0px;
-  }
 }
 /*# sourceMappingURL=style.css.map */
