@@ -1,17 +1,25 @@
+// get access to document style
 let docStyles = document.documentElement.style;
 
+// set default duration for slides
+let defaultDur = 3;
+
+// listen for the state of the DOM
 document.addEventListener("readystatechange", e => {
+
+    // start the magic ✨ when DOM is interactive
     if(e.target.readyState === "interactive"){
 
-        // get default circle length
-        docStyles.setProperty("--circle-length", getDefaultCircle(".indicator-circle-1").circleLength);
+        // set default circle length
+        // set default duration
+        setProp(docStyles, {"--circle-length" : getDefaultCircle(".indicator-circle-1").circleLength, "--default-dur" : defaultDur+"s"});
     
         // get total slides
-        let slides = getSlides("#slldz-cont .slldz-list").slidesItems;
+        let slidesData = getSlides("#slldz-cont .slldz-list");
 
         // create indicators for each slide item
         // return the newly created indicators to indicators variable
-        let indicators = populateIndicators("ul.slldz-indicators-list", slides).indicatorItems;
+        let indicatorsData = populateIndicators("ul.slldz-indicators-list", slidesData.slidesItems);
 
         // add click event listeners to each indicator
         // to change the active slide to its respective target when clicked
@@ -23,23 +31,44 @@ document.addEventListener("readystatechange", e => {
         //     })    
         // })
 
+        // gather and set the data that will be used 
+        // in the autoPlay function
+        // which in turn will be used by the activateFromIndicator function
+        let listsObj = {
+            slidesData : {
+                elements : slidesData.slidesItems,
+                activeClass : "active",
+                parent : slidesData.slidesCont
+            },
+            indicatorsData : {
+                elements : indicatorsData.indicatorItems,
+                activeClass : "indicator-active",
+                parent : indicatorsData.indicatorsCont
+            }
+        };
+
+        // run the autoplay function
+        autoPlay(listsObj, defaultDur);
     }
 });
 
-// helper functions
+// *******  global HELPER func ******* //
+
+// set property function
 const setProp = (el, val) => {
 	for(let k in val){
 		el.setProperty(k, val[k]);
 	};
 };
 
-    //set attribute helper function
+//set attribute helper function
 const setAttributes = (el, attrs)=>{
     for(k in attrs){
         el.setAttribute(k, attrs[k]);
     }
 }
 
+// ******* END global HELPER func ******* //
 
 // function to get default circle and circle length
 const getDefaultCircle = el => {
@@ -69,9 +98,13 @@ const getSlides = contEl => {
 
 // function to populate indicators
 const populateIndicators = (contEl, targetEl) => {
+    // get indicator container i.e <ul>
     let indicatorsCont = document.querySelector(contEl);
+    // get the first indicator i.e <li>, 
+    // this will be used to create other indicators
     let oldIndicatorItem = indicatorsCont.querySelector("li");
     
+    // run loop for each targetElement
     for( let i = 0; i < targetEl.length; i++){
 
         // perform deep copy of indicatorItem, set to true to copy descendants
@@ -90,15 +123,34 @@ const populateIndicators = (contEl, targetEl) => {
         // set the current indicator attribute to point to its target element
         newIndicator.setAttribute("data-target", targetEl[i].getAttribute("id"));
         
+        // ******** ⚠ stale ⚠*********//
+        // ******** understand before uncommenting *******//
         // #1 another way to implement changeActive
         // add click event listeners to each indicator
         // to change the active slide to its respective target when clicked
-        newIndicator.addEventListener("click", e => {
-            changeActive(targetEl[i], "active", getSlides("#slldz-cont .slldz-list").slidesCont);
+        // newIndicator.addEventListener("click", e => {
+        //     changeActive(targetEl[i], "active", getSlides("#slldz-cont .slldz-list").slidesCont);
 
-            // change active class of indicator as well
-            changeActive(newIndicator, "indicator-active", indicatorsCont);
-        });
+        //     // change active class of indicator as well
+        //     changeActive(newIndicator, "indicator-active", indicatorsCont);
+        // });
+
+        // get and set the data that will be used in the activateFromIndicator function
+        let indicatorObj = {
+            indicator : newIndicator,
+            indicatorClass : "indicator-active",
+            indicatorParent : indicatorsCont
+        };
+        let targetObj = {
+            target : targetEl[i],
+            targetClass : "active",
+            targetParent : getSlides("#slldz-cont .slldz-list").slidesCont
+        };
+
+        // run the activateFromIndicator function when current indicator is clicked
+        newIndicator.addEventListener("click", e => {
+            activateFromIndicator(indicatorObj, targetObj);
+        })
 
         // add the class of ".indicator-active" to indicator with
         // target element having the class of ".active"
@@ -111,6 +163,7 @@ const populateIndicators = (contEl, targetEl) => {
     // get all newly created indicatorItems
     let indicatorItems = indicatorsCont.querySelectorAll("li");
 
+    // return useful data
     return{
         indicatorsCont,
         indicatorItems
@@ -120,11 +173,61 @@ const populateIndicators = (contEl, targetEl) => {
 
 // function to change active slider
 const changeActive = (target, activeClass, targetParent) => {
+    // get all the siblings of the target(i.e the element whose class will be changed)
     let parentChildren = targetParent.children;
 
+    // remove the activeClass from all children
     for(let i = 0; i < parentChildren.length; i++){
         parentChildren[i].classList.remove(activeClass);
     };
 
+    // set the active class of the target
     target.classList.add(activeClass);
+}
+
+// function to activate a slide when based on the indicator clicked
+const activateFromIndicator = (indicatorObj, targetObj) => {
+    // destructure the object and assign variables
+    let {indicator, indicatorClass, indicatorParent} = indicatorObj;
+    let {target, targetClass, targetParent} = targetObj;
+    
+    // change the active on both slide and indicator
+    // indicator.addEventListener("click", e => {
+        changeActive(target, targetClass, targetParent);
+
+        // change active class of indicator as well
+        changeActive(indicator, indicatorClass, indicatorParent);
+    // });
+}
+
+const autoPlay = (listsObj, dur) => {
+    // destructure and assign variables
+    let {indicatorsData, slidesData} = listsObj;
+
+    // set currentIndex
+    let currentIndex = 0;
+ 
+    // run activateFromIndicator at the specified interval i.e defaultDur
+    setInterval(e => {
+        // provide neccesary parameters for activateFromIndicator within the function call
+        activateFromIndicator({
+            indicator : indicatorsData.elements[currentIndex],
+            indicatorClass : indicatorsData.activeClass,
+            indicatorParent : indicatorsData.parent
+        },
+        {
+            target : slidesData.elements[currentIndex],
+            targetClass : slidesData.activeClass,
+            targetParent : slidesData.parent
+        });
+
+        // increment the currentIndex
+        currentIndex++;
+
+        // reset currentIndex when it reaches the length of the indicator elements
+        if(currentIndex > indicatorsData.elements.length - 1){
+            currentIndex = 0;
+        }
+
+    }, dur*1000);
 }
