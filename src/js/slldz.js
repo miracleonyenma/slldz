@@ -47,8 +47,20 @@ document.addEventListener("readystatechange", e => {
             }
         };
 
-        // run the autoplay function
-        autoPlay(listsObj, defaultDur);
+        // create autoPlay function from the constructor function
+        const autoPlay = new AutoPlay(listsObj, defaultDur);
+
+        // start the interval
+        autoPlay.start();
+
+        // stop and start the interval when each indicator is clicked
+        indicatorsData.indicatorItems.forEach(x => {
+            x.addEventListener("click", e => {
+                autoPlay.stop();
+                autoPlay.start();
+            })    
+        })
+
     }
 });
 
@@ -198,36 +210,107 @@ const activateFromIndicator = (indicatorObj, targetObj) => {
         // change active class of indicator as well
         changeActive(indicator, indicatorClass, indicatorParent);
     // });
-}
+};
 
-const autoPlay = (listsObj, dur) => {
+// AutoPlay constructor function
+function AutoPlay(listObj, dur){
+    this.listObj = listObj;
+    this.dur = dur;
+
     // destructure and assign variables
-    let {indicatorsData, slidesData} = listsObj;
+    let {indicatorsData, slidesData} = listObj;
 
-    // set currentIndex
-    let currentIndex = 0;
- 
-    // run activateFromIndicator at the specified interval i.e defaultDur
-    setInterval(e => {
-        // provide neccesary parameters for activateFromIndicator within the function call
-        activateFromIndicator({
-            indicator : indicatorsData.elements[currentIndex],
-            indicatorClass : indicatorsData.activeClass,
-            indicatorParent : indicatorsData.parent
-        },
-        {
-            target : slidesData.elements[currentIndex],
-            targetClass : slidesData.activeClass,
-            targetParent : slidesData.parent
-        });
+    // function with closure
+    // so that currentIndex will be set to 0 only once
+    const func = (() => {
+        // set index to 0
+        let currentIndex = 0;
 
-        // increment the currentIndex
-        currentIndex++;
+        // this function will excecute each time the func() is called
+        return (indicatorsData, slidesData) => {
+            // provide neccesary parameters for activateFromIndicator within the function call
+            activateFromIndicator({
+                indicator : indicatorsData.elements[currentIndex],
+                indicatorClass : indicatorsData.activeClass,
+                indicatorParent : indicatorsData.parent
+            },
+            {
+                target : slidesData.elements[currentIndex],
+                targetClass : slidesData.activeClass,
+                targetParent : slidesData.parent
+            });
 
-        // reset currentIndex when it reaches the length of the indicator elements
-        if(currentIndex > indicatorsData.elements.length - 1){
-            currentIndex = 0;
+            // increment the currentIndex
+            currentIndex++;
+
+            // reset currentIndex when it reaches the length of the indicator elements
+            if(currentIndex > indicatorsData.elements.length - 1){
+                currentIndex = 0;
+            }
         }
-
+    })();
+    
+    // assign the interval to a variable
+    // so that it can be accessed by other functions
+    // especialy for stop() functionality
+    let slideInterval = setInterval(()=>{
+        func(indicatorsData, slidesData);
     }, dur*1000);
+
+    // start interval if it's not already running
+    // to prevent running multiple instances of interval
+    this.start = () => {
+        if(!slideInterval){
+            // stop interval
+            this.stop();
+            slideInterval = setInterval(()=>{
+                func(indicatorsData, slidesData);
+            }, dur*1000);
+        };
+        return this;
+    };    
+
+    // stop interval function
+    this.stop = ()=>{
+        if(slideInterval){
+            // clearInterval
+            clearInterval(slideInterval);
+            slideInterval = null;
+        }
+        return this;
+    }
+
 }
+
+// ********* OLD autoplay function, no support for stop() and start ******* //
+// const autoPlay = (listsObj, dur) => {
+//     // destructure and assign variables
+//     let {indicatorsData, slidesData} = listsObj;
+
+//     // set currentIndex
+//     let currentIndex = 0;
+ 
+//     // run activateFromIndicator at the specified interval i.e defaultDur
+//     setInterval(e => {
+//         // provide neccesary parameters for activateFromIndicator within the function call
+//         activateFromIndicator({
+//             indicator : indicatorsData.elements[currentIndex],
+//             indicatorClass : indicatorsData.activeClass,
+//             indicatorParent : indicatorsData.parent
+//         },
+//         {
+//             target : slidesData.elements[currentIndex],
+//             targetClass : slidesData.activeClass,
+//             targetParent : slidesData.parent
+//         });
+
+//         // increment the currentIndex
+//         currentIndex++;
+
+//         // reset currentIndex when it reaches the length of the indicator elements
+//         if(currentIndex > indicatorsData.elements.length - 1){
+//             currentIndex = 0;
+//         }
+
+//     }, dur*1000);
+// }
