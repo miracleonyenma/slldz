@@ -29,6 +29,7 @@ main.site-demo-main {
   width: 100%;
   position: relative;
   max-width: 680px;
+  margin: 0 auto;
 }
 
 #slldz-cont * {
