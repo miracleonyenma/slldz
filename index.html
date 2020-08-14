@@ -9,24 +9,24 @@
 </head>
 <body>
     <main class="site-demo-main">
-        <section id="slldz-cont">
+        <section id="slldz-cont" class="slldz-cont">
             <ul class="slldz-list">
-                <li class="slide-item active">
-                    <article class="slide-item-content">
-                        <figure class="slide-item-dp">
-                            <img src="./assets/img/sculls.JPG" alt="weLocate image">
+                <li class="slide-item slide-item--active">
+                    <article class="slide-item__content">
+                        <figure class="slide-item__dp-cont">
+                            <img class="slide-iem__dp" src="./assets/img/sculls.JPG" alt="weLocate image">
                         </figure>
-                        <p>
+                        <p class="slide-item__text">
                             " Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt consequatur cupiditate id itaque numquam praesentium nostrum eligendi odio quam qui! "
                         </p>
-                        <header>
-                            <h1>Brandy Orton</h1>
-                            <p>sculls inc.</p>
-                            <img src="./assets/img/sculls.JPG" alt="sculls iamge" class="header-bg">
+                        <header class="slide-item__details">
+                            <h1 class="slide-item__author">Brandy Orton</h1>
+                            <p class="slide-item__company">sculls inc.</p>
+                            <img class="slide-item__company-dp" src="./assets/img/sculls.JPG" alt="sculls iamge" class="header-bg">
                         </header>
                     </article>
                 </li>
-                <li class="slide-item">
+                <!-- <li class="slide-item">
                     <article class="slide-item-content">
                         <figure class="slide-item-dp">
                             <img src="./assets/img/grizzly.JPG" alt="grizzly image">
@@ -55,19 +55,19 @@
                             <img src="./assets/img/bearbill.JPG" alt="bear bills iamge" class="header-bg">
                         </header>
                     </article>
-                </li>
+                </li> -->
             </ul>
-            <ul class="slldz-indicators-list">
-                <li>
-                    <svg viewbox="0 0 60 60">
-                        <circle class="indicator-circle-1" r="20" cx="30" cy="30"></circle>
-                        <circle class="indicator-circle-2" r="20" cx="30" cy="30"></circle>
+            <ul class="slldz-indicators">
+                <li class="slldz-indicators__indicator slldz-indicator">
+                    <svg class="slldz-indicator__svg" viewbox="0 0 60 60">
+                        <circle class="indicator-circle-1 slldz-indicator__circle--1" r="20" cx="30" cy="30"></circle>
+                        <circle class="indicator-circle-2 slldz-indicator__circle--2" r="20" cx="30" cy="30"></circle>
                     </svg>
                 </li>
             </ul>
         </section>
     </main>
     
-    <script src="./src/js/slldz.js"></script>
+    <!-- <script src="./src/js/slldz.js"></script> -->
 </body>
 </html>
