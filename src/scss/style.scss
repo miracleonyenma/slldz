@@ -1,3 +1,5 @@
+$defval : 12px ;
+
 *{
     padding: 0;
     margin: 0;
@@ -15,7 +17,7 @@ main.site-demo-main{
     min-height: 100vh;
     width: 100%;
     display: flex;
-    align-items: center;
+    // align-items: center;
     justify-content: center;
 }
 
@@ -25,6 +27,7 @@ main.site-demo-main{
     max-width: 680px; 
     margin: 0 auto;
     padding-top: 72px;
+    margin-top: 72px;
 
     *{
         transition: all 0.72s cubic-bezier(0.175, 0.885, 0.32, 1.275);
