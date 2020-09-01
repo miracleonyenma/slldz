@@ -10,14 +10,50 @@
 <body>
     <main class="site-demo-main">
         <section id="slldz-cont" class="slldz-cont">
-            <ul class="slldz-list">
+            <ul id="slldz-list" class="slldz-list">
                 <li class="slldz-item slldz-item--active">
+                    <article class="slldz-item__content">
+                        <figure class="slldz-item__dp-cont">
+                            <img class="slldz-item__dp" src="./assets/img/slldz-logo.png" alt="Slldz logo">
+                        </figure>
+                        <p class="slldz-item__text">
+                            "Slldz (slides) is a lightweight CSS and JS library for creating minimal slides like you see here."
+                        </p>
+                        <header class="slldz-item__details">
+                            <div class="slldz-item__company-dp-cont gradient-fade">
+                                <img class="slldz-item__company-dp" src="./assets/img/slldz-logo.png" alt="sculls iamge" class="header-bg">
+                            </div>
+
+                            <h1 class="slldz-item__author">Miracleio</h1>
+                            <p class="slldz-item__company">Alphas Inc.</p>
+                        </header>
+                    </article>
+                </li>
+                <li class="slldz-item">
+                    <article class="slldz-item__content">
+                        <figure class="slldz-item__dp-cont">
+                            <img class="slldz-item__dp" src="./assets/img/bearbill.JPG" alt="weLocate image">
+                        </figure>
+                        <p class="slldz-item__text">
+                            "Slldz (slides) is a Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, omnis! Lorem ipsum dolor sit amet."
+                        </p>
+                        <header class="slldz-item__details">
+                            <div class="slldz-item__company-dp-cont gradient-fade">
+                                <img class="slldz-item__company-dp" src="./assets/img/bearbill.JPG" alt="bearbill image" class="header-bg">
+                            </div>
+
+                            <h1 class="slldz-item__author">Brandy Polar</h1>
+                            <p class="slldz-item__company">bearbills inc.</p>
+                        </header>
+                    </article>
+                </li>
+                <li class="slldz-item">
                     <article class="slldz-item__content">
                         <figure class="slldz-item__dp-cont">
                             <img class="slldz-item__dp" src="./assets/img/sculls.JPG" alt="weLocate image">
                         </figure>
                         <p class="slldz-item__text">
-                            "Slldz (slides) is a lightweight CSS and JS library for creating minimal slides like you see here."
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi quia expedita odio vel inventore corrupti id voluptate debitis alias asperiores fugit repudiandae distinctio quibusdam velit, quaerat illo nobis ut assumenda.
                         </p>
                         <header class="slldz-item__details">
                             <div class="slldz-item__company-dp-cont gradient-fade">
@@ -29,48 +65,23 @@
                         </header>
                     </article>
                 </li>
-                <!-- <li class="slide-item">
-                    <article class="slide-item-content">
-                        <figure class="slide-item-dp">
-                            <img src="./assets/img/grizzly.JPG" alt="grizzly image">
-                        </figure>
-                        <p>
-                            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam aliquid inventore qui!"
-                        </p>
-                        <header>
-                            <h1>Naomi Parazzi</h1>
-                            <p>grizzly</p>
-                            <img src="./assets/img/grizzly.JPG" alt="grizzly image" class="header-bg">
-                        </header>
-                    </article>
-                </li>
-                <li class="slide-item">
-                    <article class="slide-item-content">
-                        <figure class="slide-item-dp">
-                            <img src="./assets/img/bearbill.JPG" alt="bearbill image">
-                        </figure>
-                        <p>
-                            " Lorem ipsum dolor sit amet consectetur adipisicing. "
-                        </p>
-                        <header>
-                            <h1>George Trumbama</h1>
-                            <p>bear bills</p>
-                            <img src="./assets/img/bearbill.JPG" alt="bear bills iamge" class="header-bg">
-                        </header>
-                    </article>
-                </li> -->
             </ul>
-            <ul class="slldz-indicators">
+            <ul id="slldz-indicators" class="slldz-indicators">
                 <li class="slldz-indicators__indicator slldz-indicator">
                     <svg class="slldz-indicator__svg" viewbox="0 0 60 60">
-                        <circle class="indicator-circle-1 slldz-indicator__circle--1" r="20" cx="30" cy="30"></circle>
-                        <circle class="indicator-circle-2 slldz-indicator__circle--2" r="20" cx="30" cy="30"></circle>
+                        <circle class="slldz-indicator__circle slldz-indicator__circle--1" r="20" cx="30" cy="30"></circle>
+                        <circle class="slldz-indicator__circle slldz-indicator__circle--2" r="20" cx="30" cy="30"></circle>
                     </svg>
                 </li>
             </ul>
         </section>
     </main>
     
-    <!-- <script src="./src/js/slldz.js"></script> -->
+    <script src="./src/js/slldz-2.js"></script>
+    <script>
+        slldzInit({
+            defaultDur : 10
+        });
+    </script>
 </body>
 </html>
